@@ -35,7 +35,7 @@ cd build
 %cmake \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=%{!?debug:release}%{?debug:debug} \
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 	-DWITH_KDE=ON \
 %if "%{_lib}" == "lib64"
 	-DLIB_SUFFIX=64 \
