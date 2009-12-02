@@ -8,23 +8,36 @@ Group:		Applications/Communications
 Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
 # Source0-md5:	bf89e3ff2e12c64d9cf8b1445e46039f
 URL:		http://www.quassel-irc.org/
+BuildRequires:	QtCore-devel
+BuildRequires:	QtSql-devel
+BuildRequires:	QtSvg-devel
+BuildRequires:	QtWebKit-devel
 BuildRequires:	automoc4
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
-BuildRequires:	phonon-devel
 BuildRequires:	kde4-kdelibs-devel
-BuildRequires:	QtCore-devel
-BuildRequires:	QtWebKit-devel
+BuildRequires:	phonon-devel
+BuildRequires:	qt4-build
+BuildRequires:	qt4-qmake
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Quassel IRC is modern Internet chat client. It allows one (or multiple) client(s) can attach to and detach from a central core (distributed), but also can act plain client. It is developed for and tested on Linux®, Windows®, and MacOS X®, and should work on other platforms supporting Qt4 library (cross-platform).
+Quassel IRC is modern Internet chat client. It allows one (or
+multiple) client(s) can attach to and detach from a central core
+(distributed), but also can act plain client. It is developed for and
+tested on Linux®, Windows®, and MacOS X®, and should work on other
+platforms supporting Qt4 library (cross-platform).
 
 %description -l pl.UTF-8
-Quassel IRC jest nowoczesnym klientem rozmów w Internecie. Pozwala na podłączanie się i odłączanie wielu klientów od centralnego rdzenia (rozproszony), ale również może zachowywać się jak zwyczajny klient. Jest rozwijany i testowany na platformy Linux®, Windows® oraz MacOS X®, powinien także działać na innych platformach wspierających bibliotekę Qt4 (wieloplatformowy)
+Quassel IRC jest nowoczesnym klientem rozmów w Internecie. Pozwala na
+podłączanie się i odłączanie wielu klientów od centralnego rdzenia
+(rozproszony), ale również może zachowywać się jak zwyczajny klient.
+Jest rozwijany i testowany na platformy Linux®, Windows® oraz MacOS
+X®, powinien także działać na innych platformach wspierających
+bibliotekę Qt4 (wieloplatformowy)
 
 %prep
 %setup -q
