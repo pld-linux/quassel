@@ -1,14 +1,15 @@
 Summary:	Modern, cross-platform, distributed IRC client based on the Qt4 framework
 Summary(pl.UTF-8):	Nowoczesny, wieloplatformowy i rozproszony klient IRC oparty na bibliotece Qt4
 Name:		quassel
-Version:	0.4.1
+Version:	0.5.1
 Release:	1
 License:	GPLv2, GPLv3
 Group:		Applications/Communications
 Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
-# Source0-md5:	bf89e3ff2e12c64d9cf8b1445e46039f
+# Source0-md5:	5f4eff2034ccfe0cf8b0f2c7b104da91
 URL:		http://www.quassel-irc.org/
 BuildRequires:	QtCore-devel
+BuildRequires:	QtSql-backend
 BuildRequires:	QtSql-devel
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
@@ -37,7 +38,7 @@ podłączanie się i odłączanie wielu klientów od centralnego rdzenia
 (rozproszony), ale również może zachowywać się jak zwyczajny klient.
 Jest rozwijany i testowany na platformy Linux®, Windows® oraz MacOS
 X®, powinien także działać na innych platformach wspierających
-bibliotekę Qt4 (wieloplatformowy)
+bibliotekę Qt4 (wieloplatformowy).
 
 %prep
 %setup -q
@@ -46,12 +47,12 @@ bibliotekę Qt4 (wieloplatformowy)
 install -d build
 cd build
 %cmake \
-	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
-	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	-DLIB_INSTALL_DIR="%{_libdir}" \
+	-DCMAKE_BUILD_TYPE=%{!?debug:"Release"}%{?debug:"Debug"} \
 	-DWITH_KDE=ON \
 %if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64 \
+	-DLIB_SUFFIX="64" \
 %endif
 	..
 
