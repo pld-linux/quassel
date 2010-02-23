@@ -15,12 +15,10 @@ BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	automoc4
 BuildRequires:	cmake
-BuildRequires:	gettext-devel
 BuildRequires:	kde4-kdelibs-devel
 BuildRequires:	phonon-devel
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
-BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
