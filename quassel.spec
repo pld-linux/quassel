@@ -1,12 +1,12 @@
 Summary:	Modern, cross-platform, distributed IRC client based on the Qt4 framework
 Summary(pl.UTF-8):	Nowoczesny, wieloplatformowy i rozproszony klient IRC oparty na bibliotece Qt4
 Name:		quassel
-Version:	0.5.1
+Version:	0.5.2
 Release:	1
 License:	GPLv2, GPLv3
 Group:		Applications/Communications
 Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
-# Source0-md5:	5f4eff2034ccfe0cf8b0f2c7b104da91
+# Source0-md5:	b94cbd1f63db8e22f53360b32bb955b7
 URL:		http://www.quassel-irc.org/
 BuildRequires:	QtCore-devel
 BuildRequires:	QtSql-backend
