@@ -19,7 +19,7 @@ BuildRequires:	kde4-kdelibs-devel
 BuildRequires:	phonon-devel
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
-BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	rpmbuild(macros) >= 1.577
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -45,13 +45,8 @@ bibliotekę Qt4 (wieloplatformowy).
 install -d build
 cd build
 %cmake \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DLIB_INSTALL_DIR="%{_libdir}" \
-	-DCMAKE_BUILD_TYPE=%{!?debug:"Release"}%{?debug:"Debug"} \
 	-DWITH_KDE=ON \
-%if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX="64" \
-%endif
 	..
 
 %{__make}
