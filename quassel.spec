@@ -13,6 +13,7 @@ BuildRequires:	QtSql-backend
 BuildRequires:	QtSql-devel
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
+BuildRequires:	QtXmlPatterns-devel
 BuildRequires:	automoc4
 BuildRequires:	cmake
 BuildRequires:	kde4-kdelibs-devel
