@@ -1,11 +1,15 @@
 # TODO
 # - lang tag translations
+#
+# Conditional build:
+%bcond_with	kde		# Integration with the KDE Frameworks runtime environment
+
 %define		qtver	4.6.0
 Summary:	Modern, cross-platform, distributed IRC client based on the Qt4 framework
 Summary(pl.UTF-8):	Nowoczesny, wieloplatformowy i rozproszony klient IRC oparty na bibliotece Qt4
 Name:		quassel
 Version:	0.12.2
-Release:	0.1
+Release:	1
 License:	GPL v2, GPL v3
 Group:		Applications/Communications
 Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
@@ -17,7 +21,7 @@ BuildRequires:	QtSvg-devel >= %{qtver}
 BuildRequires:	QtWebKit-devel >= %{qtver}
 BuildRequires:	automoc4
 BuildRequires:	cmake >= 2.8.9
-BuildRequires:	kde4-kdelibs-devel
+%{?with_kde:BuildRequires:	kde4-kdelibs-devel}
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	openssl-devel
 BuildRequires:	phonon-devel
@@ -49,7 +53,7 @@ cd build
 	-DEMBED_DATA=OFF \
 	-DWITH_CRYPT=ON \
 	-DWITH_DBUS=ON \
-	-DWITH_KDE=ON \
+	-DWITH_KDE=%{!?with_kde:OFF}%{?with_kde:ON} \
 	-DWITH_LIBINDICATE=ON \
 	-DWITH_OPENSSL=ON \
 	-DWITH_OXYGEN=ON \
@@ -78,5 +82,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svgz
 %{_pixmapsdir}/quassel.png
+%if %{with kde}
 %{_desktopdir}/kde4/quassel.desktop
 %{_desktopdir}/kde4/quasselclient.desktop
+%else
+%{_desktopdir}/quassel.desktop
+%{_desktopdir}/quasselclient.desktop
+%endif
