@@ -1,5 +1,6 @@
 # TODO
 # - lang tag translations
+%define		qtver	4.6.0
 Summary:	Modern, cross-platform, distributed IRC client based on the Qt4 framework
 Summary(pl.UTF-8):	Nowoczesny, wieloplatformowy i rozproszony klient IRC oparty na bibliotece Qt4
 Name:		quassel
@@ -10,22 +11,24 @@ Group:		Applications/Communications
 Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
 # Source0-md5:	f5473a9c5927a0e8cb3a204ced887aa8
 URL:		http://www.quassel-irc.org/
-BuildRequires:	QtCore-devel
-BuildRequires:	QtSql-backend
-BuildRequires:	QtSql-devel
-BuildRequires:	QtSvg-devel
-BuildRequires:	QtWebKit-devel
-BuildRequires:	QtXmlPatterns-devel
+BuildRequires:	QtCore-devel >= %{qtver}
+BuildRequires:	QtSql-backend >= %{qtver}
+BuildRequires:	QtSql-devel >= %{qtver}
+BuildRequires:	QtSvg-devel >= %{qtver}
+BuildRequires:	QtWebKit-devel >= %{qtver}
+BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	automoc4
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.8.9
 BuildRequires:	kde4-kdelibs-devel
 BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	openssl-devel
 BuildRequires:	phonon-devel
+BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
-Suggests:	QtSql-sqlite3
+Suggests:	QtSql-sqlite3 >= %{qtver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
