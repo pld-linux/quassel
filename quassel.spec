@@ -12,11 +12,9 @@ Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
 # Source0-md5:	f5473a9c5927a0e8cb3a204ced887aa8
 URL:		http://www.quassel-irc.org/
 BuildRequires:	QtCore-devel >= %{qtver}
-BuildRequires:	QtSql-backend >= %{qtver}
 BuildRequires:	QtSql-devel >= %{qtver}
 BuildRequires:	QtSvg-devel >= %{qtver}
 BuildRequires:	QtWebKit-devel >= %{qtver}
-BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	automoc4
 BuildRequires:	cmake >= 2.8.9
 BuildRequires:	kde4-kdelibs-devel
