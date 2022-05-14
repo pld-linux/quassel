@@ -4,33 +4,52 @@
 # Conditional build:
 %bcond_with	kde		# Integration with the KDE Frameworks runtime environment
 
-%define		qtver	4.6.0
+%define		qtver	5.5.0
 Summary:	Modern, cross-platform, distributed IRC client based on the Qt4 framework
 Summary(pl.UTF-8):	Nowoczesny, wieloplatformowy i rozproszony klient IRC oparty na bibliotece Qt4
 Name:		quassel
-Version:	0.12.2
+Version:	0.14.0
 Release:	1
 License:	GPL v2, GPL v3
 Group:		Applications/Communications
-Source0:	http://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
-# Source0-md5:	f5473a9c5927a0e8cb3a204ced887aa8
-URL:		http://www.quassel-irc.org/
-BuildRequires:	QtCore-devel >= %{qtver}
-BuildRequires:	QtSql-devel >= %{qtver}
-BuildRequires:	QtSvg-devel >= %{qtver}
-BuildRequires:	QtWebKit-devel >= %{qtver}
-BuildRequires:	automoc4
-BuildRequires:	cmake >= 2.8.9
-%{?with_kde:BuildRequires:	kde4-kdelibs-devel}
+Source0:	https://www.quassel-irc.org/pub/%{name}-%{version}.tar.bz2
+# Source0-md5:	abc3843021840a00d9d83778a2c1211b
+URL:		https://www.quassel-irc.org/
+BuildRequires:	Qt5Core-devel >= %{qtver}
+BuildRequires:	Qt5DBus-devel >= %{qtver}
+BuildRequires:	Qt5Multimedia-devel >= %{qtver}
+BuildRequires:	Qt5Sql-devel >= %{qtver}
+BuildRequires:	Qt5Svg-devel >= %{qtver}
+%ifarch x32
+BuildRequires:	Qt5WebKit-devel >= %{qtver}
+%else
+BuildRequires:	Qt5WebEngine-devel >= %{qtver}
+%endif
+BuildRequires:	boost-devel >= 1.54
+BuildRequires:	cmake >= 3.5
+%if %{with kde}
+BuildRequires:	kf5-extra-cmake-modules
+BuildRequires:	kf5-kconfigwidgets-devel
+BuildRequires:	kf5-kcoreaddons-devel
+BuildRequires:	kf5-knotifications-devel
+BuildRequires:	kf5-knotifyconfig-devel
+BuildRequires:	kf5-ktextwidgets-devel
+BuildRequires:	kf5-kwidgetsaddons
+BuildRequires:	kf5-kxmlgui-devel
+BuildRequires:	kf5-sonnet-devel
+%endif
+BuildRequires:	libdbusmenu-qt5-devel
 BuildRequires:	libstdc++-devel >= 6:4.7
-BuildRequires:	openssl-devel
-BuildRequires:	phonon-devel
+BuildRequires:	phonon-qt5-devel
 BuildRequires:	pkgconfig
-BuildRequires:	qt4-build
-BuildRequires:	qt4-qmake
+BuildRequires:	qca-qt5-devel
+BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	qt5-linguist >= %{qtver}
+BuildRequires:	qt5-qmake >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
-Suggests:	QtSql-sqlite3 >= %{qtver}
+BuildRequires:	zlib-devel
+Suggests:	Qt5Sql-sqldriver-sqlite3 >= %{qtver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,21 +65,29 @@ podłączanie się i odłączanie wielu klientów od centralnego rdzenia
 %prep
 %setup -q
 
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+perl(\s|$),#!%{__perl}\1,' \
+      data/scripts/inxi \
+      data/scripts/mpris
+
 %build
 install -d build
 cd build
 %cmake \
 	-DEMBED_DATA=OFF \
-	-DWITH_CRYPT=ON \
-	-DWITH_DBUS=ON \
-	-DWITH_KDE=%{!?with_kde:OFF}%{?with_kde:ON} \
+%if %{with kde}
+	-DWITH_KDE=ON \
+%else
+	-DWITH_KDE=OFF \
+	-DECM_FOUND=NO \
+%endif
 	-DWITH_LIBINDICATE=ON \
-	-DWITH_OPENSSL=ON \
-	-DWITH_OXYGEN=ON \
-	-DWITH_PHONON=ON \
-	-DWITH_QT5=OFF \
-	-DWITH_SYSLOG=ON \
+%ifarch x32
 	-DWITH_WEBKIT=ON \
+	-DWITH_WEBENGINE=OFF \
+%else
+	-DWITH_WEBKIT=OFF \
+	-DWITH_WEBENGINE=ON \
+%endif
 	..
 
 %{__make}
@@ -73,19 +100,21 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/quassel
 %attr(755,root,root) %{_bindir}/quasselclient
 %attr(755,root,root) %{_bindir}/quasselcore
+%attr(755,root,root) %{_libdir}/libquassel-client.so.0.14.0
+%attr(755,root,root) %{_libdir}/libquassel-common.so.0.14.0
+%attr(755,root,root) %{_libdir}/libquassel-core.so.0.14.0
+%attr(755,root,root) %{_libdir}/libquassel-qtui.so.0.14.0
+%attr(755,root,root) %{_libdir}/libquassel-uisupport.so.0.14.0
 %{_datadir}/%{name}
 %{_iconsdir}/hicolor/*/*/*.png
-%{_iconsdir}/hicolor/*/*/*.svgz
-%{_pixmapsdir}/quassel.png
-%if %{with kde}
-%{_desktopdir}/kde4/quassel.desktop
-%{_desktopdir}/kde4/quasselclient.desktop
-%else
 %{_desktopdir}/quassel.desktop
 %{_desktopdir}/quasselclient.desktop
-%endif
+%{?with_kde:%{_datadir}/knotifications5/quassel.notifyrc}
